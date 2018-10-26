@@ -34,6 +34,7 @@
                     <jsp:include page="../displayMessage.jsp" />
                     <!-- /.warning -->
                     <div class="row">
+                        <!--Done by Ryan Lye-->
                         <div class="col-lg-6">
                             <form role="form" action="../RawMaterialManagement_AddRawMaterialServlet">
                                 <div class="form-group">
@@ -50,19 +51,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" required="true" type="text" name="SKU">
+                                    <input class="form-control" required="true" type="text" name="SKU" pattern="RM\d+" title="Format: RM#, '#' represents integer > 0.">
                                 </div>
                                 <div class="form-group">
                                     <label>Length per item</label>
-                                    <input class="form-control" required="true" type="number" name="length">
+                                    <input class="form-control" required="true" type="number" name="length" pattern="[0-9]+" min="1">
                                 </div>
                                 <div class="form-group">
                                     <label>Width per item</label>
-                                    <input class="form-control" required="true" type="number" name="width">
+                                    <input class="form-control" required="true" type="number" name="width" pattern="[0-9]+" min="1">
                                 </div>
                                 <div class="form-group">
                                     <label>Height per item</label>
-                                    <input class="form-control" required="true" type="number" name="height">
+                                    <input class="form-control" required="true" type="number" name="height" pattern="[0-9]+" min="1">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">

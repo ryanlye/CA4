@@ -3,6 +3,8 @@ package A6_servlets;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +31,18 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
             String source = request.getParameter("source");
             System.out.println("source is " + source);
             
+            //Done by Ryan Lye (p1638611)
+            Pattern pSKU = Pattern.compile("RM\\d+");
+            Pattern pLWH = Pattern.compile("[1-9]\\d*");
+            
+            Matcher mSKU = pSKU.matcher(SKU);
+            Matcher mLENGTH = pLWH.matcher(_length.toString());
+            Matcher mWIDTH = pLWH.matcher(width.toString());
+            Matcher mHEIGHT = pLWH.matcher(height.toString());
+            
+            //validating
+            if (mSKU.matches() && mLENGTH.matches() && mWIDTH.matches() && mHEIGHT.matches()){
+            
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height);
                 result = "?goodMsg=Raw Material with SKU: " + SKU + " has been created successfully.";
@@ -37,6 +51,13 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
                 result = "?errMsg=Failed to add raw material, SKU: " + SKU + " already exist.";
                 response.sendRedirect(source + result);
             }
+            
+            }//end of if(mSKU.matches....)
+            else{
+                result = "?errMsg=Failed to add raw material. Please check your inputs again.";
+                response.sendRedirect(source + result);
+            }
+            
         } catch (Exception ex) {
             out.println(ex);
         } finally {

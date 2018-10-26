@@ -49,19 +49,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label>SKU</label>
-                                        <input class="form-control" type="text" required="true" name="SKU">
+                                        <input class="form-control" type="text" required="true" name="SKU" pattern="RM\d+">
                                     </div>
                                     <div class="form-group">
                                         <label>Length per item</label>
-                                        <input class="form-control" type="number" required="true" min="1" step="1" name="length" >
+                                        <input class="form-control" type="number" required="true" min="1" step="1" name="length" pattern="[0-9]" min="1">
                                     </div>
                                     <div class="form-group">
                                         <label>Width per item</label>
-                                        <input class="form-control" type="number" required="true" min="1" step="1" name="width" >
+                                        <input class="form-control" type="number" required="true" min="1" step="1" name="width" pattern="[0-9]" min="1">
                                     </div>
                                     <div class="form-group">
                                         <label>Height per item</label>
-                                        <input class="form-control" type="number" required="true" min="1" step="1" name="height" >
+                                        <input class="form-control" type="number" required="true" min="1" step="1" name="height" pattern="[0-9]" min="1">
                                     </div>
                                     <div>
                                         <input type="file" name="javafile">
