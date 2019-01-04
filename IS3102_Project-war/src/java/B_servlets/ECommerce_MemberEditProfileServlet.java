@@ -104,6 +104,7 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
 
         if (res.getStatus() == Response.Status.OK.getStatusCode()) {     
             System.out.println("success");
+            response.sendRedirect("ECommerce_GetMember");
         } else { 
             System.out.println("failed");
         }
