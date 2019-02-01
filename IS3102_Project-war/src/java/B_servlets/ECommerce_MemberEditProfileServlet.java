@@ -5,8 +5,10 @@
  */
 package B_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,28 +22,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- *
- * @author ekyj1
- */
+// Done by Mark Loh p1636846
 @WebServlet(name = "ECommerce_MemberEditProfileServlet", urlPatterns = {"/ECommerce_MemberEditProfileServlet"})
 public class ECommerce_MemberEditProfileServlet extends HttpServlet {
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ECommerce_MemberEditProfileServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ECommerce_MemberEditProfileServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
@@ -69,43 +57,53 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        //processRequest(request, response);
         Client client = ClientBuilder.newClient();
-           HttpSession session = request.getSession();
-           
-           String email = (String)session.getAttribute("memberEmail");
-           String name = request.getParameter("name");
-           String phone = request.getParameter("phone");
-           String city = request.getParameter("country");
-           String address = request.getParameter("address");
-           String securityAnswer = request.getParameter("securityAnswer");
-           int securityQuestion = Integer.parseInt(request.getParameter("securityQuestion"));
-           int age = Integer.parseInt(request.getParameter("age"));
-           int income = Integer.parseInt(request.getParameter("income"));
-           
-           WebTarget target = client.target("http://localhost:8080/IS3102_WebService-Student/webresources/MemberWS")
-                   .path("updateProfile")
-                   .queryParam("email", email)
-                   .queryParam("name", name)
-                   .queryParam("phone", phone)
-                   .queryParam("city",city)
-                   .queryParam("address",address)
-                   .queryParam("securityAnswer", securityAnswer)
-                   .queryParam("securityQuestion", securityQuestion)
-                   .queryParam("age",age)
-                   .queryParam("income",income);
-           
-                 Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
-                 Response res = invocationBuilder.post(null);
-        
+        HttpSession session = request.getSession();
 
-        if (res.getStatus() == Response.Status.OK.getStatusCode()) {     
-            System.out.println("success");
+        String email = (String) session.getAttribute("memberEmail");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String city = request.getParameter("country");
+        String address = request.getParameter("address");
+        int securityQuestion = Integer.parseInt(request.getParameter("securityQuestion"));
+        String securityAnswer = request.getParameter("securityAnswer");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int income = Integer.parseInt(request.getParameter("income"));
+
+        String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
+
+        WebTarget target = client.target("http://localhost:8080/IS3102_WebService-Student/webresources/memberWS")
+                .path("updateProfile")
+                .queryParam("email", email)
+                .queryParam("name", name)
+                .queryParam("phone", phone)
+                .queryParam("city", city)
+                .queryParam("address", address)
+                .queryParam("securityQuestion", securityQuestion)
+                .queryParam("securityAnswer", securityAnswer)
+                .queryParam("age", age)
+                .queryParam("income", income);
+
+        if ((password != "" && repassword != "") && (password.equals(repassword))) {
+            accountManagementBean.resetMemberPassword(email, password);
+            System.out.println("Password changed");
+        }
+
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+        Response res = invocationBuilder.post(null);
+        //System.out.println("status: " + response.getStatus());
+
+        if (res.getStatus() == Response.Status.OK.getStatusCode()) {
             response.sendRedirect("ECommerce_GetMember");
-        } else { 
+        } else {
             System.out.println("failed");
         }
     }// end of doPost
@@ -119,5 +117,4 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
