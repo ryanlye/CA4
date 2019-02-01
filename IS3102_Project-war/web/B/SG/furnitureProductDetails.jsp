@@ -9,7 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 
-<!--Done by Test -->
+<!--Done by Mark Loh (p1636846)-->
 
 <%
     String sku = request.getParameter("sku");
