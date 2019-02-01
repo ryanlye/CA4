@@ -9,7 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 
-<!--Done by Ryan Lye (p1638611)-->
+<!--Done by Mark Loh (p1636846)-->
 
 <%
     String sku = request.getParameter("sku");
@@ -76,7 +76,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Furnitures</h2>
+                                    <h2>Furniture</h2>
                                 </div>
                             </div>
                         </div>
