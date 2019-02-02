@@ -58,7 +58,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             String id = request.getParameter("id");
             double price = Double.parseDouble(request.getParameter("price"));
             String name = request.getParameter("name");
-            String img = request.getParameter("img");
+            String img = request.getParameter("imageURL");
             
             //getting the Singapore ID
             String countryId = "25";
