@@ -8,16 +8,23 @@ public class ShoppingCartLineItem{
     private double price;
     private int quantity;
     private long countryID;
-
+    
+    //Done by Ryan Lye (p1638611)
+    
     public ShoppingCartLineItem() {
-        this.id="";
-        this.SKU = "";
-        this.name = "";
-        this.imageURL = "";
-        this.price = 0.0;
-        this.quantity = 0;
-        this.countryID = 0;
     }
+
+    public ShoppingCartLineItem(String id, String SKU, String name, String imageURL, double price, int quantity, Long countryID) {
+        this.id=id;
+        this.SKU = SKU;
+        this.name = name;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.quantity = quantity;
+        this.countryID = countryID;
+    }
+    
+
 
     public String getId() {
         return id;
