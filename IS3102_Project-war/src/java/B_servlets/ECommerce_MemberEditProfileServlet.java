@@ -92,7 +92,8 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
                 .queryParam("age", age)
                 .queryParam("income", income);
 
-        if ((password != "" && repassword != "") && (password.equals(repassword))) {
+      //if ((password != "" && repassword != "") && (password.equals(repassword))) {
+        if ((!password.equals("") && !repassword.equals("")) && (password.equals(repassword))) {
             accountManagementBean.resetMemberPassword(email, password);
             System.out.println("Password changed");
         }
